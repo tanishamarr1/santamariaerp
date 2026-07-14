@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" href="assets/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<title>Estadísticas · Constructora Santamaria</title>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="app-shell" id="app-shell">
+  <main class="main">
+    <div class="topbar">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="eyebrow">Análisis del negocio</div>
+          <h1>Estadísticas</h1>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="theme-toggle" onclick="alternarTema()"><i id="theme-toggle-icon" class="fa-solid fa-moon"></i></button>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="card chart-card">
+        <div class="section-title">Facturas por mes</div>
+        <canvas id="chart-facturas-mes"></canvas>
+      </div>
+      <div class="card chart-card">
+        <div class="section-title">Ingresos por mes</div>
+        <canvas id="chart-ingresos-mes"></canvas>
+      </div>
+      <div class="card chart-card">
+        <div class="section-title">Clientes nuevos por mes</div>
+        <canvas id="chart-clientes-nuevos"></canvas>
+      </div>
+      <div class="card chart-card">
+        <div class="section-title">Facturas pendientes vs. pagadas</div>
+        <canvas id="chart-estado-facturas"></canvas>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/estadisticas.js"></script>
+</body>
+</html>

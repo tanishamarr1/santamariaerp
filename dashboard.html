@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" href="assets/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<title>Panel · Constructora Santamaria</title>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="app-shell" id="app-shell">
+  <main class="main">
+    <div class="topbar">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="eyebrow">Resumen general</div>
+          <h1>Panel de control</h1>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="theme-toggle" onclick="alternarTema()"><i id="theme-toggle-icon" class="fa-solid fa-moon"></i></button>
+        <a href="factura.html" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nueva factura</a>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="card kpi-card">
+        <div class="icon-badge"><i class="fa-solid fa-file-invoice"></i></div>
+        <div class="label">Total facturas</div>
+        <div class="value" id="kpi-total-facturas">–</div>
+        <div class="delta">Histórico completo</div>
+      </div>
+      <div class="card kpi-card">
+        <div class="icon-badge"><i class="fa-solid fa-calendar-day"></i></div>
+        <div class="label">Facturas del día</div>
+        <div class="value" id="kpi-facturas-hoy">–</div>
+        <div class="delta" id="kpi-fecha-hoy"></div>
+      </div>
+      <div class="card kpi-card">
+        <div class="icon-badge"><i class="fa-solid fa-sack-dollar"></i></div>
+        <div class="label">Total facturado</div>
+        <div class="value" id="kpi-total-facturado">–</div>
+        <div class="delta">Suma de todas las facturas</div>
+      </div>
+      <div class="card kpi-card">
+        <div class="icon-badge"><i class="fa-solid fa-address-book"></i></div>
+        <div class="label">Clientes registrados</div>
+        <div class="value" id="kpi-clientes">–</div>
+        <div class="delta">Base de datos de clientes</div>
+      </div>
+    </div>
+
+    <div class="card" style="padding: 20px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <div class="section-title" style="margin-bottom:0;">Últimas facturas creadas</div>
+        <a href="historial.html" class="btn btn-ghost btn-sm">Ver historial completo <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Número</th><th>Cliente</th><th>Fecha</th><th>Proyecto</th><th>Estado</th><th>Total</th><th></th></tr>
+          </thead>
+          <tbody id="tabla-ultimas-facturas">
+            <tr><td colspan="7" style="text-align:center; color:var(--ink-faint); padding:30px;">Cargando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

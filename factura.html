@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" href="assets/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<title>Nueva factura · Constructora Santamaria</title>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="app-shell" id="app-shell">
+  <main class="main">
+    <div class="topbar">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="eyebrow" id="modo-eyebrow">Documento nuevo</div>
+          <h1 id="titulo-pagina">Generar factura</h1>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="theme-toggle" onclick="alternarTema()"><i id="theme-toggle-icon" class="fa-solid fa-moon"></i></button>
+        <span id="autosave-indicator" class="faint" style="font-size:12.5px;"></span>
+        <button class="btn btn-secondary" id="btn-imprimir"><i class="fa-solid fa-print"></i> Imprimir</button>
+        <button class="btn btn-primary" id="btn-guardar"><i class="fa-solid fa-floppy-disk"></i> Guardar factura</button>
+      </div>
+    </div>
+
+    <div class="invoice-layout">
+      <!-- ==================== FORMULARIO ==================== -->
+      <div>
+        <div class="card form-card" style="margin-bottom:16px;">
+          <h3><i class="fa-solid fa-file-lines"></i> Datos de la factura <span class="num-plate mono" id="numero-factura-plate">FAC-000000</span></h3>
+          <div class="field-row">
+            <div class="field">
+              <label>Fecha</label>
+              <input type="date" id="f-fecha">
+            </div>
+            <div class="field">
+              <label>Proyecto</label>
+              <input type="text" id="f-proyecto" placeholder="Ej. Remodelación villa Punta Cana">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Método de pago</label>
+              <select id="f-metodo-pago">
+                <option>Efectivo</option>
+                <option>Transferencia</option>
+                <option>Tarjeta</option>
+                <option>Cheque</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Estado</label>
+              <select id="f-estado">
+                <option>Pendiente</option>
+                <option>Pagado</option>
+                <option>Cancelado</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="card form-card" style="margin-bottom:16px;">
+          <h3><i class="fa-solid fa-user"></i> Cliente</h3>
+          <div class="field autocomplete-wrap">
+            <label>Nombre del cliente</label>
+            <input type="text" id="f-cliente-nombre" placeholder="Escribe para buscar un cliente..." autocomplete="off">
+            <div class="autocomplete-list" id="cliente-autocomplete"></div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>RNC (opcional)</label>
+              <input type="text" id="f-cliente-rnc" placeholder="000-00000-0">
+            </div>
+            <div class="field">
+              <label>Teléfono</label>
+              <input type="text" id="f-cliente-telefono" placeholder="(809) 000-0000">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label>Correo</label>
+              <input type="email" id="f-cliente-correo" placeholder="cliente@correo.com">
+            </div>
+            <div class="field">
+              <label>Dirección</label>
+              <input type="text" id="f-cliente-direccion" placeholder="Calle, sector, ciudad">
+            </div>
+          </div>
+        </div>
+
+        <div class="card form-card" style="margin-bottom:16px;">
+          <h3><i class="fa-solid fa-boxes-stacked"></i> Productos y servicios</h3>
+          <table class="items-table">
+            <thead>
+              <tr><th class="col-desc">Descripción</th><th class="col-num">Precio</th><th class="col-num">Cantidad</th><th class="col-total">Total</th><th class="col-del"></th></tr>
+            </thead>
+            <tbody id="tabla-productos"></tbody>
+          </table>
+          <button class="btn btn-secondary btn-sm" id="btn-agregar-producto"><i class="fa-solid fa-plus"></i> Agregar producto</button>
+
+          <div class="totals-box">
+            <div class="totals-row"><span>Subtotal</span><span id="txt-subtotal">RD$ 0.00</span></div>
+            <div class="totals-row itbis-toggle-row">
+              <label class="itbis-toggle">
+                <input type="checkbox" id="chk-aplicar-itbis" checked>
+                <span>Aplicar ITBIS (18%)</span>
+              </label>
+              <span id="txt-itbis">RD$ 0.00</span>
+            </div>
+            <div class="totals-row grand"><span>Total</span><span id="txt-total">RD$ 0.00</span></div>
+          </div>
+        </div>
+
+        <div class="card form-card">
+          <h3><i class="fa-solid fa-note-sticky"></i> Observaciones</h3>
+          <textarea id="f-observaciones" rows="3" placeholder="Notas adicionales para el cliente..."></textarea>
+        </div>
+      </div>
+
+      <!-- ==================== VISTA PREVIA ==================== -->
+      <div class="preview-sticky">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <div class="section-title" style="margin-bottom:0;">Vista previa</div>
+          <button class="btn btn-secondary btn-sm" id="btn-descargar-pdf"><i class="fa-solid fa-download"></i> Descargar PDF</button>
+        </div>
+        <div id="printable-invoice">
+          <div class="invoice-doc" id="invoice-doc">
+            <!-- Generado dinámicamente por factura.js -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/pdf-generator.js"></script>
+<script src="js/factura.js"></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" href="assets/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<title>Configuración · Constructora Santamaria</title>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="app-shell" id="app-shell">
+  <main class="main">
+    <div class="topbar">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="eyebrow">Personalización</div>
+          <h1>Configuración de la empresa</h1>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="theme-toggle" onclick="alternarTema()"><i id="theme-toggle-icon" class="fa-solid fa-moon"></i></button>
+        <button class="btn btn-primary" id="btn-guardar-config"><i class="fa-solid fa-floppy-disk"></i> Guardar cambios</button>
+      </div>
+    </div>
+
+    <div class="config-grid">
+      <div>
+        <div class="card form-card" style="margin-bottom:16px;">
+          <h3><i class="fa-solid fa-building"></i> Datos generales</h3>
+          <div class="field">
+            <label>Nombre de la empresa</label>
+            <input type="text" id="c-nombre-empresa" placeholder="Constructora Santamaria">
+          </div>
+          <div class="field">
+            <label>Dirección</label>
+            <input type="text" id="c-direccion" placeholder="Calle, sector, ciudad">
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Teléfono</label><input type="text" id="c-telefono" placeholder="(809) 000-0000"></div>
+            <div class="field"><label>Correo</label><input type="email" id="c-correo" placeholder="info@santamaria.com"></div>
+          </div>
+          <div class="field">
+            <label>Pie de página de la factura</label>
+            <textarea id="c-pie-pagina" rows="2" placeholder="Gracias por su confianza."></textarea>
+          </div>
+        </div>
+
+        <div class="card form-card">
+          <h3><i class="fa-solid fa-palette"></i> Color principal</h3>
+          <p class="muted" style="font-size:13px; margin-bottom:10px;">Se usa en acentos puntuales del sistema y del PDF.</p>
+          <div class="color-swatches" id="color-swatches"></div>
+          <div class="field" style="margin-top:14px;">
+            <label>Color personalizado (hex)</label>
+            <input type="text" id="c-color" placeholder="#97742F">
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card form-card" style="margin-bottom:16px;">
+          <h3><i class="fa-solid fa-image"></i> Logo</h3>
+          <div class="logo-upload-box" id="logo-upload-box" onclick="document.getElementById('input-logo').click()">
+            <img id="logo-preview" style="display:none;">
+            <div id="logo-placeholder"><i class="fa-solid fa-cloud-arrow-up" style="font-size:22px; color:var(--ink-faint);"></i>
+              <p class="muted" style="font-size:13px; margin-top:8px;">Click para subir el logo</p>
+            </div>
+          </div>
+          <input type="file" id="input-logo" accept="image/*" style="display:none;">
+          <p class="faint" style="font-size:11.5px; margin-top:8px;">El logo se guarda como imagen embebida (base64) en la configuración.</p>
+        </div>
+
+        <div class="card form-card">
+          <h3><i class="fa-solid fa-signature"></i> Firma</h3>
+          <div class="logo-upload-box" id="firma-upload-box" onclick="document.getElementById('input-firma').click()">
+            <img id="firma-preview" style="display:none;">
+            <div id="firma-placeholder"><i class="fa-solid fa-pen-nib" style="font-size:22px; color:var(--ink-faint);"></i>
+              <p class="muted" style="font-size:13px; margin-top:8px;">Click para subir la firma</p>
+            </div>
+          </div>
+          <input type="file" id="input-firma" accept="image/*" style="display:none;">
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/configuracion.js"></script>
+</body>
+</html>

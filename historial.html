@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
+<link rel="icon" href="assets/icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<title>Historial de facturas · Constructora Santamaria</title>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<div class="app-shell" id="app-shell">
+  <main class="main">
+    <div class="topbar">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+        <div>
+          <div class="eyebrow">Todos los documentos</div>
+          <h1>Historial de facturas</h1>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button class="theme-toggle" onclick="alternarTema()"><i id="theme-toggle-icon" class="fa-solid fa-moon"></i></button>
+        <button class="btn btn-secondary" id="btn-export-csv"><i class="fa-solid fa-file-csv"></i> CSV</button>
+        <button class="btn btn-secondary" id="btn-export-excel"><i class="fa-solid fa-file-excel"></i> Excel</button>
+        <a href="factura.html" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Nueva factura</a>
+      </div>
+    </div>
+
+    <div class="card" style="padding: 18px 20px;">
+      <div class="filters-bar">
+        <div class="search-input">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="input-buscar" placeholder="Buscar por cliente, número, proyecto...">
+        </div>
+        <select class="select-filter" id="filtro-estado">
+          <option value="">Todos los estados</option>
+          <option>Pagado</option>
+          <option>Pendiente</option>
+          <option>Cancelado</option>
+        </select>
+        <select class="select-filter" id="filtro-orden">
+          <option value="creado_en-desc">Más recientes primero</option>
+          <option value="creado_en-asc">Más antiguas primero</option>
+          <option value="total-desc">Mayor total</option>
+          <option value="total-asc">Menor total</option>
+          <option value="cliente_nombre-asc">Cliente (A-Z)</option>
+        </select>
+      </div>
+
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Número</th><th>Cliente</th><th>Fecha</th><th>Proyecto</th><th>Estado</th><th>Total</th><th>Acciones</th></tr>
+          </thead>
+          <tbody id="tabla-historial">
+            <tr><td colspan="7" style="text-align:center; color:var(--ink-faint); padding:30px;">Cargando...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Contenedor oculto para renderizar factura al generar PDF desde el historial -->
+<div style="position:fixed; left:-9999px; top:0;">
+  <div class="invoice-doc" id="invoice-doc-hidden"></div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/pdf-generator.js"></script>
+<script src="js/historial.js"></script>
+</body>
+</html>
